@@ -33,18 +33,18 @@ export default function ContactPage() {
 
   return (
     <div>
-      <section className="bg-gradient-to-br from-forest/90 to-forest-dark">
-        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-          <h1 className="text-4xl font-bold text-white">Contact Us</h1>
-          <p className="mt-4 max-w-2xl text-lg text-white/90">
+      <section className="bg-gradient-to-br from-[#228b22]/90 to-[#1a6b1a]">
+        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-16 lg:px-8">
+          <h1 className="text-2xl font-bold text-white sm:text-4xl">Contact Us</h1>
+          <p className="mt-3 max-w-2xl text-base text-white/90 sm:mt-4 sm:text-lg">
             Have questions or need a quote? We&apos;re here to help. Reach out by phone,
             or send us a message.
           </p>
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="grid gap-12 lg:grid-cols-2">
+      <section className="mx-auto max-w-7xl border-t border-zinc-200 px-4 py-8 sm:px-6 sm:py-16 lg:px-8">
+        <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
           <div>
             <h2 className="text-2xl font-bold text-zinc-900">Get in Touch</h2>
             <div className="mt-6 space-y-6">
@@ -73,7 +73,7 @@ export default function ContactPage() {
             </div>
           </div>
 
-          <div className="rounded-xl border border-zinc-200 bg-white p-8 shadow-sm">
+          <div className="rounded-xl border border-zinc-200 bg-white p-4 shadow-sm sm:p-6 md:p-8">
             <h2 className="text-2xl font-bold text-zinc-900">Send a Message</h2>
             {submitted ? (
               <div className="mt-6 rounded-lg bg-forest/10 p-6 text-forest">
@@ -97,7 +97,7 @@ export default function ContactPage() {
                     onChange={(e) =>
                       setFormData((prev) => ({ ...prev, name: e.target.value }))
                     }
-                    className="mt-1 block w-full rounded-lg border border-zinc-300 px-4 py-2 focus:border-forest focus:ring-forest"
+                    className="mt-1 block min-h-[48px] w-full rounded-lg border border-zinc-300 px-4 py-3 text-base focus:border-[#228b22] focus:ring-[#228b22]"
                   />
                 </div>
                 <div>
@@ -112,7 +112,7 @@ export default function ContactPage() {
                     onChange={(e) =>
                       setFormData((prev) => ({ ...prev, email: e.target.value }))
                     }
-                    className="mt-1 block w-full rounded-lg border border-zinc-300 px-4 py-2 focus:border-forest focus:ring-forest"
+                    className="mt-1 block min-h-[48px] w-full rounded-lg border border-zinc-300 px-4 py-3 text-base focus:border-[#228b22] focus:ring-[#228b22]"
                   />
                 </div>
                 <div>
@@ -126,7 +126,7 @@ export default function ContactPage() {
                     onChange={(e) =>
                       setFormData((prev) => ({ ...prev, phone: e.target.value }))
                     }
-                    className="mt-1 block w-full rounded-lg border border-zinc-300 px-4 py-2 focus:border-forest focus:ring-forest"
+                    className="mt-1 block min-h-[48px] w-full rounded-lg border border-zinc-300 px-4 py-3 text-base focus:border-[#228b22] focus:ring-[#228b22]"
                   />
                 </div>
                 <div>
@@ -141,12 +141,12 @@ export default function ContactPage() {
                     onChange={(e) =>
                       setFormData((prev) => ({ ...prev, message: e.target.value }))
                     }
-                    className="mt-1 block w-full rounded-lg border border-zinc-300 px-4 py-2 focus:border-forest focus:ring-forest"
+                    className="mt-1 block min-h-[100px] w-full rounded-lg border border-zinc-300 px-4 py-3 text-base focus:border-[#228b22] focus:ring-[#228b22]"
                   />
                 </div>
                 <button
                   type="submit"
-                  className="w-full rounded-lg bg-orange-500 py-3 font-semibold text-white hover:bg-orange-600"
+                  className="flex min-h-[52px] w-full items-center justify-center rounded-lg bg-orange-500 py-4 font-semibold text-white hover:bg-orange-600 active:bg-orange-700"
                 >
                   Send Message
                 </button>

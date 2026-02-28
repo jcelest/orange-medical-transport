@@ -161,7 +161,7 @@ export default function AdminPage() {
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="mt-1 block w-full rounded-lg border border-zinc-300 px-4 py-2 focus:border-orange-500 focus:ring-orange-500"
+                className="mt-1 block min-h-[48px] w-full rounded-lg border border-zinc-300 px-4 py-3 text-base focus:border-orange-500 focus:ring-orange-500"
               />
             </div>
             {loginError && (
@@ -169,7 +169,7 @@ export default function AdminPage() {
             )}
             <button
               type="submit"
-              className="w-full rounded-lg bg-orange-500 py-2 font-semibold text-white hover:bg-orange-600"
+              className="flex min-h-[48px] w-full items-center justify-center rounded-lg bg-orange-500 py-3 font-semibold text-white hover:bg-orange-600 active:bg-orange-700"
             >
               Login
             </button>
@@ -193,7 +193,7 @@ export default function AdminPage() {
           <select
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
-            className="rounded-lg border border-zinc-300 px-4 py-2 text-sm"
+            className="min-h-[44px] rounded-lg border border-zinc-300 px-4 py-2 text-base"
           >
             <option value="all">All</option>
             <option value="pending">Pending</option>
@@ -203,7 +203,7 @@ export default function AdminPage() {
           </select>
           <button
             onClick={handleLogout}
-            className="rounded-lg border border-zinc-300 px-4 py-2 text-sm hover:bg-zinc-50"
+            className="min-h-[44px] rounded-lg border border-zinc-300 px-4 py-2 text-sm hover:bg-zinc-50 active:bg-zinc-100"
           >
             Logout
           </button>
@@ -217,109 +217,180 @@ export default function AdminPage() {
           No bookings found.
         </div>
       ) : (
-        <div className="mt-8 overflow-x-auto">
-          <table className="min-w-full divide-y divide-zinc-200 rounded-xl border border-zinc-200 bg-white">
-            <thead>
-              <tr className="bg-zinc-50">
-                <th className="px-4 py-3 text-left text-xs font-medium uppercase text-zinc-500">
-                  Patient
-                </th>
-                <th className="px-4 py-3 text-left text-xs font-medium uppercase text-zinc-500">
-                  Date / Time
-                </th>
-                <th className="px-4 py-3 text-left text-xs font-medium uppercase text-zinc-500">
-                  Service
-                </th>
-                <th className="px-4 py-3 text-left text-xs font-medium uppercase text-zinc-500">
-                  Pickup → Dropoff
-                </th>
-                <th className="px-4 py-3 text-left text-xs font-medium uppercase text-zinc-500">
-                  Status
-                </th>
-                <th className="px-4 py-3 text-left text-xs font-medium uppercase text-zinc-500">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-zinc-200">
-              {bookings.map((booking) => (
-                <tr key={booking.id} className="hover:bg-zinc-50">
-                  <td className="px-4 py-3">
-                    <div>
-                      <p className="font-medium text-zinc-900">
-                        {booking.patientName}
-                      </p>
-                      <p className="text-sm text-zinc-500">
-                        {booking.patientPhone}
-                      </p>
-                    </div>
-                  </td>
-                  <td className="px-4 py-3 text-sm text-zinc-600">
-                    {booking.appointmentDate} at {booking.appointmentTime}
-                  </td>
-                  <td className="px-4 py-3 text-sm">
-                    {SERVICE_LABELS[booking.serviceType] || booking.serviceType}
-                  </td>
-                  <td className="max-w-xs px-4 py-3 text-sm text-zinc-600">
-                    <span className="truncate">{booking.pickupAddress}</span>
-                    <br />
-                    <span className="truncate">→ {booking.dropoffAddress}</span>
-                  </td>
-                  <td className="px-4 py-3">
-                    <span
-                      className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                        booking.status === "confirmed"
-                          ? "bg-green-100 text-green-800"
-                          : booking.status === "completed"
-                          ? "bg-zinc-100 text-zinc-800"
-                          : booking.status === "cancelled"
-                          ? "bg-red-100 text-red-800"
-                          : "bg-amber-100 text-amber-800"
-                      }`}
-                    >
-                      {booking.status}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3">
-                    <div className="flex flex-wrap items-center gap-2">
-                      {booking.status === "pending" && (
-                        <>
-                          <button
-                            onClick={() => updateStatus(booking.id, "confirmed")}
-                            className="rounded bg-green-600 px-2 py-1 text-xs text-white hover:bg-green-700"
-                          >
-                            Confirm
-                          </button>
-                          <button
-                            onClick={() => updateStatus(booking.id, "cancelled")}
-                            className="rounded bg-red-600 px-2 py-1 text-xs text-white hover:bg-red-700"
-                          >
-                            Cancel
-                          </button>
-                        </>
-                      )}
-                      {booking.status === "confirmed" && (
-                        <button
-                          onClick={() => updateStatus(booking.id, "completed")}
-                          className="rounded bg-zinc-600 px-2 py-1 text-xs text-white hover:bg-zinc-700"
-                        >
-                          Complete
-                        </button>
-                      )}
+        <>
+          {/* Mobile/Tablet: Card layout */}
+          <div className="mt-6 space-y-4 md:hidden">
+            {bookings.map((booking) => (
+              <div
+                key={booking.id}
+                className="rounded-xl border border-zinc-200 bg-white p-4 shadow-sm"
+              >
+                <div className="flex items-start justify-between gap-2">
+                  <div>
+                    <p className="font-semibold text-zinc-900">{booking.patientName}</p>
+                    <p className="text-sm text-zinc-500">{booking.patientPhone}</p>
+                  </div>
+                  <span
+                    className={`shrink-0 rounded-full px-2.5 py-0.5 text-xs font-medium ${
+                      booking.status === "confirmed"
+                        ? "bg-green-100 text-green-800"
+                        : booking.status === "completed"
+                        ? "bg-zinc-100 text-zinc-800"
+                        : booking.status === "cancelled"
+                        ? "bg-red-100 text-red-800"
+                        : "bg-amber-100 text-amber-800"
+                    }`}
+                  >
+                    {booking.status}
+                  </span>
+                </div>
+                <p className="mt-2 text-sm text-zinc-600">
+                  {booking.appointmentDate} at {booking.appointmentTime} · {SERVICE_LABELS[booking.serviceType] || booking.serviceType}
+                </p>
+                <p className="mt-1 text-sm text-zinc-500">
+                  {booking.pickupAddress} → {booking.dropoffAddress}
+                </p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {booking.status === "pending" && (
+                    <>
                       <button
-                        onClick={() => removeBooking(booking.id)}
-                        className="rounded border border-zinc-300 px-2 py-1 text-xs text-zinc-600 hover:bg-zinc-100"
-                        title="Remove appointment"
+                        onClick={() => updateStatus(booking.id, "confirmed")}
+                        className="min-h-[44px] rounded-lg bg-green-600 px-4 py-2 text-sm font-medium text-white active:bg-green-700"
                       >
-                        Remove
+                        Confirm
                       </button>
-                    </div>
-                  </td>
+                      <button
+                        onClick={() => updateStatus(booking.id, "cancelled")}
+                        className="min-h-[44px] rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white active:bg-red-700"
+                      >
+                        Cancel
+                      </button>
+                    </>
+                  )}
+                  {booking.status === "confirmed" && (
+                    <button
+                      onClick={() => updateStatus(booking.id, "completed")}
+                      className="min-h-[44px] rounded-lg bg-zinc-600 px-4 py-2 text-sm font-medium text-white active:bg-zinc-700"
+                    >
+                      Complete
+                    </button>
+                  )}
+                  <button
+                    onClick={() => removeBooking(booking.id)}
+                    className="min-h-[44px] rounded-lg border border-zinc-300 px-4 py-2 text-sm text-zinc-600 active:bg-zinc-100"
+                  >
+                    Remove
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Desktop: Table layout */}
+          <div className="mt-8 hidden overflow-x-auto md:block">
+            <table className="min-w-full divide-y divide-zinc-200 rounded-xl border border-zinc-200 bg-white">
+              <thead>
+                <tr className="bg-zinc-50">
+                  <th className="px-4 py-3 text-left text-xs font-medium uppercase text-zinc-500">
+                    Patient
+                  </th>
+                  <th className="px-4 py-3 text-left text-xs font-medium uppercase text-zinc-500">
+                    Date / Time
+                  </th>
+                  <th className="px-4 py-3 text-left text-xs font-medium uppercase text-zinc-500">
+                    Service
+                  </th>
+                  <th className="px-4 py-3 text-left text-xs font-medium uppercase text-zinc-500">
+                    Pickup → Dropoff
+                  </th>
+                  <th className="px-4 py-3 text-left text-xs font-medium uppercase text-zinc-500">
+                    Status
+                  </th>
+                  <th className="px-4 py-3 text-left text-xs font-medium uppercase text-zinc-500">
+                    Actions
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody className="divide-y divide-zinc-200">
+                {bookings.map((booking) => (
+                  <tr key={booking.id} className="hover:bg-zinc-50">
+                    <td className="px-4 py-3">
+                      <div>
+                        <p className="font-medium text-zinc-900">
+                          {booking.patientName}
+                        </p>
+                        <p className="text-sm text-zinc-500">
+                          {booking.patientPhone}
+                        </p>
+                      </div>
+                    </td>
+                    <td className="px-4 py-3 text-sm text-zinc-600">
+                      {booking.appointmentDate} at {booking.appointmentTime}
+                    </td>
+                    <td className="px-4 py-3 text-sm">
+                      {SERVICE_LABELS[booking.serviceType] || booking.serviceType}
+                    </td>
+                    <td className="max-w-xs px-4 py-3 text-sm text-zinc-600">
+                      <span className="truncate">{booking.pickupAddress}</span>
+                      <br />
+                      <span className="truncate">→ {booking.dropoffAddress}</span>
+                    </td>
+                    <td className="px-4 py-3">
+                      <span
+                        className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium ${
+                          booking.status === "confirmed"
+                            ? "bg-green-100 text-green-800"
+                            : booking.status === "completed"
+                            ? "bg-zinc-100 text-zinc-800"
+                            : booking.status === "cancelled"
+                            ? "bg-red-100 text-red-800"
+                            : "bg-amber-100 text-amber-800"
+                        }`}
+                      >
+                        {booking.status}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3">
+                      <div className="flex flex-wrap items-center gap-2">
+                        {booking.status === "pending" && (
+                          <>
+                            <button
+                              onClick={() => updateStatus(booking.id, "confirmed")}
+                              className="rounded bg-green-600 px-2 py-1 text-xs text-white hover:bg-green-700"
+                            >
+                              Confirm
+                            </button>
+                            <button
+                              onClick={() => updateStatus(booking.id, "cancelled")}
+                              className="rounded bg-red-600 px-2 py-1 text-xs text-white hover:bg-red-700"
+                            >
+                              Cancel
+                            </button>
+                          </>
+                        )}
+                        {booking.status === "confirmed" && (
+                          <button
+                            onClick={() => updateStatus(booking.id, "completed")}
+                            className="rounded bg-zinc-600 px-2 py-1 text-xs text-white hover:bg-zinc-700"
+                          >
+                            Complete
+                          </button>
+                        )}
+                        <button
+                          onClick={() => removeBooking(booking.id)}
+                          className="rounded border border-zinc-300 px-2 py-1 text-xs text-zinc-600 hover:bg-zinc-100"
+                          title="Remove appointment"
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </>
       )}
     </div>
   );

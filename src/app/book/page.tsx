@@ -13,6 +13,7 @@ const SERVICE_TYPES = [
 function BookForm() {
   const searchParams = useSearchParams();
   const [submitted, setSubmitted] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -57,6 +58,7 @@ function BookForm() {
         throw new Error(data.error || "Failed to create booking");
       }
 
+      setEmailSent(data.emailSent === true);
       setSubmitted(true);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
@@ -67,8 +69,8 @@ function BookForm() {
 
   if (submitted) {
     return (
-      <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="rounded-xl border border-zinc-200 bg-white p-8 text-center shadow-sm">
+      <div className="mx-auto max-w-2xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
+        <div className="rounded-xl border border-zinc-200 bg-white p-6 text-center shadow-sm sm:p-8">
           <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-forest/10">
             <svg
               className="h-8 w-8 text-[#228b22]"
@@ -92,8 +94,10 @@ function BookForm() {
             request and will contact you shortly to confirm your appointment.
           </p>
           <p className="mt-2 text-sm text-zinc-500">
-            A confirmation has been sent to {formData.patientEmail}. If you have
-            questions, call us at{" "}
+            {emailSent
+              ? `A confirmation has been sent to ${formData.patientEmail}. `
+              : "We have received your request. "}
+            If you have questions, call us at{" "}
             <a href="tel:407-249-1209" className="font-medium text-orange-500">
               407-249-1209
             </a>
@@ -112,20 +116,20 @@ function BookForm() {
 
   return (
     <div>
-      <section className="bg-gradient-to-br from-forest/90 to-forest-dark">
-        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-          <h1 className="text-4xl font-bold text-white">Book Transportation</h1>
-          <p className="mt-4 max-w-2xl text-lg text-white/90">
+      <section className="bg-gradient-to-br from-[#228b22]/90 to-[#1a6b1a]">
+        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-12 lg:px-8">
+          <h1 className="text-xl font-bold text-white sm:text-4xl">Book Transportation</h1>
+          <p className="mt-3 max-w-2xl text-base text-white/90 sm:mt-4 sm:text-lg">
             Request a ride for yourself or a loved one. We&apos;ll confirm your
             appointment shortly.
           </p>
         </div>
       </section>
 
-      <section className="mx-auto max-w-2xl px-4 py-12 sm:px-6 lg:px-8">
+      <section id="booking-form" className="mx-auto max-w-2xl scroll-mt-20 px-4 py-6 sm:px-6 sm:py-12 lg:px-8">
         <form
           onSubmit={handleSubmit}
-          className="rounded-xl border border-zinc-200 bg-white p-8 shadow-sm"
+          className="rounded-xl border border-zinc-200 bg-white p-4 shadow-sm sm:p-6 md:p-8"
         >
           {error && (
             <div className="mb-6 rounded-lg bg-red-50 p-4 text-red-700">{error}</div>
@@ -148,7 +152,7 @@ function BookForm() {
                   onChange={(e) =>
                     setFormData((prev) => ({ ...prev, patientName: e.target.value }))
                   }
-                  className="mt-1 block w-full rounded-lg border border-zinc-300 px-4 py-2 focus:border-orange-500 focus:ring-orange-500"
+                  className="mt-1 block min-h-[48px] w-full rounded-lg border border-zinc-300 px-4 py-3 text-base focus:border-orange-500 focus:ring-orange-500"
                 />
               </div>
               <div>
@@ -161,12 +165,14 @@ function BookForm() {
                 <input
                   type="tel"
                   id="patientPhone"
+                  inputMode="tel"
+                  autoComplete="tel"
                   required
                   value={formData.patientPhone}
                   onChange={(e) =>
                     setFormData((prev) => ({ ...prev, patientPhone: e.target.value }))
                   }
-                  className="mt-1 block w-full rounded-lg border border-zinc-300 px-4 py-2 focus:border-orange-500 focus:ring-orange-500"
+                  className="mt-1 block min-h-[48px] w-full rounded-lg border border-zinc-300 px-4 py-3 text-base focus:border-orange-500 focus:ring-orange-500"
                 />
               </div>
             </div>
@@ -178,15 +184,17 @@ function BookForm() {
               >
                 Email *
               </label>
-              <input
-                type="email"
-                id="patientEmail"
+                <input
+                  type="email"
+                  id="patientEmail"
+                  inputMode="email"
+                  autoComplete="email"
                 required
                 value={formData.patientEmail}
                 onChange={(e) =>
                   setFormData((prev) => ({ ...prev, patientEmail: e.target.value }))
                 }
-                className="mt-1 block w-full rounded-lg border border-zinc-300 px-4 py-2 focus:border-orange-500 focus:ring-orange-500"
+                className="mt-1 block min-h-[48px] w-full rounded-lg border border-zinc-300 px-4 py-3 text-base focus:border-orange-500 focus:ring-orange-500"
               />
             </div>
 
@@ -206,7 +214,7 @@ function BookForm() {
                   setFormData((prev) => ({ ...prev, pickupAddress: e.target.value }))
                 }
                 placeholder="Street, City, ZIP"
-                className="mt-1 block w-full rounded-lg border border-zinc-300 px-4 py-2 focus:border-orange-500 focus:ring-orange-500"
+                className="mt-1 block min-h-[48px] w-full rounded-lg border border-zinc-300 px-4 py-3 text-base focus:border-orange-500 focus:ring-orange-500"
               />
             </div>
 
@@ -226,7 +234,7 @@ function BookForm() {
                   setFormData((prev) => ({ ...prev, dropoffAddress: e.target.value }))
                 }
                 placeholder="Street, City, ZIP"
-                className="mt-1 block w-full rounded-lg border border-zinc-300 px-4 py-2 focus:border-orange-500 focus:ring-orange-500"
+                className="mt-1 block min-h-[48px] w-full rounded-lg border border-zinc-300 px-4 py-3 text-base focus:border-orange-500 focus:ring-orange-500"
               />
             </div>
 
@@ -249,7 +257,7 @@ function BookForm() {
                       appointmentDate: e.target.value,
                     }))
                   }
-                  className="mt-1 block w-full rounded-lg border border-zinc-300 px-4 py-2 focus:border-orange-500 focus:ring-orange-500"
+                  className="mt-1 block min-h-[48px] w-full rounded-lg border border-zinc-300 px-4 py-3 text-base focus:border-orange-500 focus:ring-orange-500"
                 />
               </div>
               <div>
@@ -270,7 +278,7 @@ function BookForm() {
                       appointmentTime: e.target.value,
                     }))
                   }
-                  className="mt-1 block w-full rounded-lg border border-zinc-300 px-4 py-2 focus:border-orange-500 focus:ring-orange-500"
+                  className="mt-1 block min-h-[48px] w-full rounded-lg border border-zinc-300 px-4 py-3 text-base focus:border-orange-500 focus:ring-orange-500"
                 />
               </div>
             </div>
@@ -289,7 +297,7 @@ function BookForm() {
                 onChange={(e) =>
                   setFormData((prev) => ({ ...prev, serviceType: e.target.value }))
                 }
-                className="mt-1 block w-full rounded-lg border border-zinc-300 px-4 py-2 focus:border-orange-500 focus:ring-orange-500"
+                className="mt-1 block min-h-[48px] w-full rounded-lg border border-zinc-300 px-4 py-3 text-base focus:border-orange-500 focus:ring-orange-500"
               >
                 {SERVICE_TYPES.map((s) => (
                   <option key={s.value} value={s.value}>
@@ -314,7 +322,7 @@ function BookForm() {
                   setFormData((prev) => ({ ...prev, specialNeeds: e.target.value }))
                 }
                 placeholder="e.g., oxygen, mobility aid"
-                className="mt-1 block w-full rounded-lg border border-zinc-300 px-4 py-2 focus:border-orange-500 focus:ring-orange-500"
+                className="mt-1 block min-h-[48px] w-full rounded-lg border border-zinc-300 px-4 py-3 text-base focus:border-orange-500 focus:ring-orange-500"
               />
             </div>
 
@@ -333,7 +341,7 @@ function BookForm() {
                   setFormData((prev) => ({ ...prev, notes: e.target.value }))
                 }
                 placeholder="Any other information we should know"
-                className="mt-1 block w-full rounded-lg border border-zinc-300 px-4 py-2 focus:border-orange-500 focus:ring-orange-500"
+                className="mt-1 block min-h-[48px] w-full rounded-lg border border-zinc-300 px-4 py-3 text-base focus:border-orange-500 focus:ring-orange-500"
               />
             </div>
           </div>
@@ -342,7 +350,7 @@ function BookForm() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full rounded-lg bg-orange-500 py-3 font-semibold text-white transition hover:bg-orange-600 disabled:opacity-50"
+              className="flex min-h-[52px] w-full items-center justify-center rounded-lg bg-orange-500 py-4 font-semibold text-white transition hover:bg-orange-600 active:bg-orange-700 disabled:opacity-50"
             >
               {loading ? "Submitting..." : "Submit Booking Request"}
             </button>

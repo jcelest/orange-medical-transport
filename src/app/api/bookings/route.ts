@@ -66,16 +66,25 @@ export async function POST(request: NextRequest) {
       notes,
     };
 
-    // Send notifications (run in parallel, don't block response)
+    // Send notifications (must await so emails actually send before response)
     const notificationEmail = process.env.NOTIFICATION_EMAIL || process.env.SMTP_USER;
     const companyPhone = process.env.COMPANY_PHONE || "4072491209";
     const hasSMS = process.env.TWILIO_ACCOUNT_SID || process.env.SMS_EMAIL_GATEWAY;
+    const hasSmtp = process.env.SMTP_USER && process.env.SMTP_PASS;
 
-    Promise.all([
+    const notificationResults = await Promise.allSettled([
       notificationEmail ? sendBookingEmail(bookingData, notificationEmail) : Promise.resolve(),
       hasSMS ? sendBookingSMS(bookingData, companyPhone) : Promise.resolve(),
       sendBookingConfirmationToPatient(bookingData),
-    ]).catch((err) => console.error("Notification error:", err));
+    ]).catch((err) => {
+      console.error("Notification error:", err);
+      return [];
+    });
+
+    // Log any failures for debugging
+    notificationResults.forEach((result, i) => {
+      if (result.status === "rejected") console.error("Notification failed:", result.reason);
+    });
 
     return NextResponse.json({
       success: true,
@@ -83,6 +92,7 @@ export async function POST(request: NextRequest) {
         id: booking.id,
         status: booking.status,
       },
+      emailSent: hasSmtp,
     });
   } catch (error) {
     console.error("Booking error:", error);

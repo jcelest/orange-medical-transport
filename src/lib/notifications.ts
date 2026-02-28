@@ -147,7 +147,10 @@ export async function sendBookingSMS(booking: BookingData, toPhone: string) {
 
 export async function sendBookingConfirmationToPatient(booking: BookingData) {
   const hasSmtp = process.env.SMTP_USER && process.env.SMTP_PASS;
-  if (!hasSmtp) return { success: false, skipped: true };
+  if (!hasSmtp) {
+    console.log("[Patient Email] Skipped - Add SMTP_USER and SMTP_PASS to .env for confirmation emails");
+    return { success: false, skipped: true };
+  }
 
   try {
     const transporter = nodemailer.createTransport({

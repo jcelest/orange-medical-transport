@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
@@ -11,9 +11,16 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://orangemedicaltransport.com"),
   title: "Orange Medical Transport | Non-Emergency Medical Transport",
   description:
     "Safe and efficient non-emergency medical transport across Central Florida. Ambulatory, wheelchair, and stretcher services. Book your ride today.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
 };
 
 export default function RootLayout({
@@ -25,7 +32,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${dmSans.variable} min-h-screen font-sans antialiased`}>
         <Header />
-        <main className="min-h-[calc(100vh-8rem)]">{children}</main>
+        <main className="min-h-[50vh] sm:min-h-[calc(100vh-8rem)]">{children}</main>
         <Footer />
       </body>
     </html>
