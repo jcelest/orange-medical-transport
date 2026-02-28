@@ -9,18 +9,35 @@ datasource db {
 }
 
 model Booking {
-  id          String   @id @default(cuid())
-  patientName String
-  patientPhone String
-  patientEmail String
-  pickupAddress String
-  dropoffAddress String
-  appointmentDate String
-  appointmentTime String
-  serviceType   String   // ambulatory, wheelchair, stretcher
-  specialNeeds  String?
-  notes        String?
-  status       String   @default("pending") // pending, confirmed, completed, cancelled
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id                 String   @id @default(cuid())
+  patientName        String
+  patientPhone       String
+  patientEmail       String
+  pickupAddress      String
+  dropoffAddress     String
+  appointmentDate    String
+  appointmentTime    String
+  serviceType        String   // 1 Wheelchair, 2 Wheelchairs, Stretcher, Ambulatory
+  specialNeeds       String?
+  notes              String?
+  status             String   @default("pending")
+  serviceTimeWindow  String?  // business, afterHours
+  weight             String?
+  additionalPassengers String?
+  pickupDetails      String?  // Terminal, Room, Suite, Apt
+  pickupOtherDetails String?
+  dropoffDetails     String?
+  dropoffOtherDetails String?
+  deadMiles          String?
+  tripDistance       String?
+  tripType           String?  // oneWay, roundtrip, threeLegs
+  thirdAddress       String?
+  legDistance        String?
+  totalDistance      String?
+  waitTime           String?
+  rushFee            String?  // yes, no
+  requestedByName    String?
+  certificationAccepted Boolean?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 }

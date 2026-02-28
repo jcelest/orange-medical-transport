@@ -10,6 +10,7 @@
     "postinstall": "prisma generate",
     "db:push": "prisma db push",
     "db:push:turso": "node scripts/push-turso.js",
+    "db:migrate:turso": "node scripts/migrate-turso.js",
     "db:generate": "prisma generate"
   },
   "dependencies": {

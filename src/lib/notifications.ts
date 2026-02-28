@@ -12,12 +12,32 @@ export interface BookingData {
   serviceType: string;
   specialNeeds?: string;
   notes?: string;
+  serviceTimeWindow?: string;
+  weight?: string;
+  additionalPassengers?: string;
+  pickupDetails?: string;
+  pickupOtherDetails?: string;
+  dropoffDetails?: string;
+  dropoffOtherDetails?: string;
+  deadMiles?: string;
+  tripDistance?: string;
+  tripType?: string;
+  thirdAddress?: string;
+  legDistance?: string;
+  totalDistance?: string;
+  waitTime?: string;
+  rushFee?: string;
+  requestedByName?: string;
 }
 
 const serviceTypeLabels: Record<string, string> = {
   ambulatory: "Ambulatory",
   wheelchair: "Wheelchair",
   stretcher: "Stretcher",
+  "1 Wheelchair": "1 Wheelchair",
+  "2 Wheelchairs": "2 Wheelchairs",
+  Ambulatory: "Ambulatory",
+  Stretcher: "Stretcher",
 };
 
 export async function sendBookingEmail(booking: BookingData, toEmail: string) {
@@ -38,6 +58,26 @@ export async function sendBookingEmail(booking: BookingData, toEmail: string) {
       },
     });
 
+    const extra = [
+      booking.serviceTimeWindow && `Service time: ${booking.serviceTimeWindow}`,
+      booking.weight && `Weight: ${booking.weight} lbs`,
+      booking.additionalPassengers && `Additional passengers: ${booking.additionalPassengers}`,
+      booking.pickupDetails && `Pickup details: ${booking.pickupDetails}`,
+      booking.pickupOtherDetails && `Pickup other: ${booking.pickupOtherDetails}`,
+      booking.dropoffDetails && `Dropoff details: ${booking.dropoffDetails}`,
+      booking.dropoffOtherDetails && `Dropoff other: ${booking.dropoffOtherDetails}`,
+      booking.deadMiles && `Dead miles: ${booking.deadMiles}`,
+      booking.tripDistance && `Trip distance: ${booking.tripDistance}`,
+      booking.tripType && `Trip type: ${booking.tripType}`,
+      booking.thirdAddress && `3rd address: ${booking.thirdAddress}`,
+      booking.legDistance && `Leg distance: ${booking.legDistance}`,
+      booking.totalDistance && `Total distance: ${booking.totalDistance}`,
+      booking.waitTime && `Wait time: ${booking.waitTime}`,
+      booking.rushFee && `Rush fee: ${booking.rushFee}`,
+      booking.requestedByName && `Requested by: ${booking.requestedByName}`,
+      booking.specialNeeds && `Special needs: ${booking.specialNeeds}`,
+      booking.notes && `Notes: ${booking.notes}`,
+    ].filter(Boolean);
     const html = `
       <h2>New Medical Transport Booking</h2>
       <p><strong>Patient Name:</strong> ${booking.patientName}</p>
@@ -48,8 +88,7 @@ export async function sendBookingEmail(booking: BookingData, toEmail: string) {
       <p><strong>Date:</strong> ${booking.appointmentDate}</p>
       <p><strong>Time:</strong> ${booking.appointmentTime}</p>
       <p><strong>Service Type:</strong> ${serviceTypeLabels[booking.serviceType] || booking.serviceType}</p>
-      ${booking.specialNeeds ? `<p><strong>Special Needs:</strong> ${booking.specialNeeds}</p>` : ""}
-      ${booking.notes ? `<p><strong>Notes:</strong> ${booking.notes}</p>` : ""}
+      ${extra.length ? `<p><strong>Additional details:</strong><br/>${extra.join("<br/>")}</p>` : ""}
     `;
 
     await transporter.sendMail({
@@ -163,6 +202,12 @@ export async function sendBookingConfirmationToPatient(booking: BookingData) {
       },
     });
 
+    const extraItems = [
+      booking.serviceTimeWindow && `<li><strong>Service time:</strong> ${booking.serviceTimeWindow}</li>`,
+      booking.weight && `<li><strong>Weight:</strong> ${booking.weight} lbs</li>`,
+      booking.tripType && `<li><strong>Trip type:</strong> ${booking.tripType}</li>`,
+      booking.requestedByName && `<li><strong>Requested by:</strong> ${booking.requestedByName}</li>`,
+    ].filter(Boolean);
     const html = `
       <h2>Your Booking Confirmation - Orange Medical Transport</h2>
       <p>Dear ${booking.patientName},</p>
@@ -173,6 +218,7 @@ export async function sendBookingConfirmationToPatient(booking: BookingData) {
         <li><strong>Service:</strong> ${serviceTypeLabels[booking.serviceType] || booking.serviceType}</li>
         <li><strong>Pickup:</strong> ${booking.pickupAddress}</li>
         <li><strong>Dropoff:</strong> ${booking.dropoffAddress}</li>
+        ${extraItems.join("")}
       </ul>
       <p>We will contact you shortly to confirm. If you have questions, call us at <strong>407-429-1209</strong>.</p>
       <p>Thank you for choosing Orange Medical Transport!</p>
