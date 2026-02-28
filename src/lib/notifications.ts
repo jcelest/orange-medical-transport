@@ -67,7 +67,7 @@ export async function sendBookingEmail(booking: BookingData, toEmail: string) {
 
 /**
  * Free SMS via carrier email-to-SMS gateways.
- * Format: 10-digit-number@gateway (e.g., 4072491209@vtext.com for Verizon)
+ * Format: 10-digit-number@gateway (e.g., 4074291209@vtext.com for Verizon)
  * Common gateways: vtext.com (Verizon), txt.att.net (AT&T), tmomail.net (T-Mobile)
  */
 async function sendSMSViaEmailGateway(
@@ -77,7 +77,7 @@ async function sendSMSViaEmailGateway(
   const hasSmtp = process.env.SMTP_USER && process.env.SMTP_PASS;
   if (!hasSmtp) return { success: false };
 
-  const body = `New booking: ${booking.patientName} - ${booking.appointmentDate} at ${booking.appointmentTime}. Pickup: ${booking.pickupAddress}. Call 407-249-1209 for details.`;
+  const body = `New booking: ${booking.patientName} - ${booking.appointmentDate} at ${booking.appointmentTime}. Pickup: ${booking.pickupAddress}. Call 407-429-1209 for details.`;
 
   try {
     const transporter = nodemailer.createTransport({
@@ -117,7 +117,7 @@ export async function sendBookingSMS(booking: BookingData, toPhone: string) {
         process.env.TWILIO_AUTH_TOKEN
       );
 
-      const body = `New booking: ${booking.patientName} - ${booking.appointmentDate} at ${booking.appointmentTime}. Pickup: ${booking.pickupAddress}. Call 407-249-1209 for details.`;
+      const body = `New booking: ${booking.patientName} - ${booking.appointmentDate} at ${booking.appointmentTime}. Pickup: ${booking.pickupAddress}. Call 407-429-1209 for details.`;
 
       const formattedPhone = toPhone.replace(/\D/g, "").startsWith("1")
         ? `+${toPhone.replace(/\D/g, "")}`
@@ -174,7 +174,7 @@ export async function sendBookingConfirmationToPatient(booking: BookingData) {
         <li><strong>Pickup:</strong> ${booking.pickupAddress}</li>
         <li><strong>Dropoff:</strong> ${booking.dropoffAddress}</li>
       </ul>
-      <p>We will contact you shortly to confirm. If you have questions, call us at <strong>407-249-1209</strong>.</p>
+      <p>We will contact you shortly to confirm. If you have questions, call us at <strong>407-429-1209</strong>.</p>
       <p>Thank you for choosing Orange Medical Transport!</p>
     `;
 

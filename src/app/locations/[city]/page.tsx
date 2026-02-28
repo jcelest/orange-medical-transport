@@ -26,7 +26,7 @@ export async function generateMetadata({
   if (!cityData) return { title: "Medical Transport" };
 
   const title = `${cityData.displayName} Medical Transport | Wheelchair & NEMT Services | Orange Medical Transport`;
-  const description = `Non-emergency medical transportation in ${cityData.displayName}, FL. Wheelchair transport, dialysis rides, doctor appointments. ADA accessible. Call 407-249-1209. Serving ${cityData.displayName} and Central Florida.`;
+  const description = `Non-emergency medical transportation in ${cityData.displayName}, FL. Wheelchair transport, dialysis rides, doctor appointments. ADA accessible. Call 407-429-1209. Serving ${cityData.displayName} and Central Florida.`;
 
   return {
     title,
@@ -80,10 +80,10 @@ export default async function CityLandingPage({
                 Book a Ride
               </Link>
               <a
-                href="tel:407-249-1209"
+                href="tel:407-429-1209"
                 className="flex min-h-[48px] min-w-[140px] items-center justify-center rounded-lg border-2 border-white/30 bg-white/10 px-6 py-3 text-base font-semibold text-white backdrop-blur transition hover:bg-white/20 active:bg-white/30"
               >
-                Call 407-249-1209
+                Call 407-429-1209
               </a>
             </div>
           </div>
@@ -136,7 +136,7 @@ export default async function CityLandingPage({
             Orange Medical Transport is your trusted <strong>NEMT provider</strong> for
             Central Florida. We offer <strong>private pay medical transportation</strong> and
             work with healthcare facilities for <strong>Medicaid transportation services</strong>.
-            Book your <strong>medical ride</strong> today—call 407-249-1209.
+            Book your <strong>medical ride</strong> today—call 407-429-1209.
           </p>
         </div>
       </section>
@@ -197,10 +197,10 @@ export default async function CityLandingPage({
               Book {cityData.displayName} Transport
             </Link>
             <a
-              href="tel:407-249-1209"
+              href="tel:407-429-1209"
               className="flex min-h-[48px] items-center justify-center rounded-lg border-2 border-[#228b22] px-6 py-3 font-semibold text-[#228b22] hover:bg-[#228b22]/5 active:bg-[#228b22]/10"
             >
-              407-249-1209
+              407-429-1209
             </a>
           </div>
         </div>

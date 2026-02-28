@@ -35,10 +35,10 @@ export default function Home() {
                 Book a Ride
               </Link>
               <a
-                href="tel:407-249-1209"
+                href="tel:407-429-1209"
                 className="flex min-h-[48px] min-w-[140px] items-center justify-center rounded-lg border-2 border-white/30 bg-white/10 px-6 py-3 text-base font-semibold text-white backdrop-blur transition hover:bg-white/20 active:bg-white/30"
               >
-                Call now: 407-249-1209
+                Call now: 407-429-1209
               </a>
             </div>
           </div>

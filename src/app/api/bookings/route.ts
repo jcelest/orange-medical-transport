@@ -68,7 +68,7 @@ export async function POST(request: NextRequest) {
 
     // Send notifications (must await so emails actually send before response)
     const notificationEmail = process.env.NOTIFICATION_EMAIL || process.env.SMTP_USER;
-    const companyPhone = process.env.COMPANY_PHONE || "4072491209";
+    const companyPhone = process.env.COMPANY_PHONE || "4074291209";
     const hasSMS = process.env.TWILIO_ACCOUNT_SID || process.env.SMS_EMAIL_GATEWAY;
     const hasSmtp = process.env.SMTP_USER && process.env.SMTP_PASS;
 

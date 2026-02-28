@@ -51,10 +51,10 @@ export default function ContactPage() {
               <div>
                 <h3 className="font-semibold text-zinc-900">Phone</h3>
                 <a
-                  href="tel:407-249-1209"
+                  href="tel:407-429-1209"
                   className="mt-2 block text-orange-500 hover:text-orange-600"
                 >
-                  407-249-1209
+                  407-429-1209
                 </a>
               </div>
               <div>
@@ -80,7 +80,7 @@ export default function ContactPage() {
                 <p className="font-medium">Thank you for your message!</p>
                 <p className="mt-2 text-sm">
                   We&apos;ll get back to you as soon as possible. For immediate assistance,
-                  please call us at 407-249-1209.
+                  please call us at 407-429-1209.
                 </p>
               </div>
             ) : (

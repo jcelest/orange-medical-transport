@@ -85,8 +85,8 @@ export default function Footer() {
             <h3 className="font-semibold text-zinc-900">Contact</h3>
             <ul className="mt-4 space-y-3 text-sm text-zinc-600">
               <li>
-                <a href="tel:407-249-1209" className="block min-h-[44px] py-1 hover:text-[#228b22] sm:min-h-0 sm:py-0">
-                  407-249-1209
+                <a href="tel:407-429-1209" className="block min-h-[44px] py-1 hover:text-[#228b22] sm:min-h-0 sm:py-0">
+                  407-429-1209
                 </a>
               </li>
               <li className="flex flex-col gap-1">
