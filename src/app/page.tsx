@@ -159,7 +159,7 @@ function ServiceCard({
   return (
     <div className="flex flex-col overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm transition hover:shadow-md active:scale-[0.99]">
       <div className="relative h-40 overflow-hidden bg-gradient-to-br from-forest/10 to-orange-500/10 sm:h-48">
-        {serviceType === "wheelchair" ? (
+        {serviceType === "wheelchair" && (
           <Image
             src="/images/ford-transit-wheelchair.png"
             alt="Wheelchair accessible Ford Transit van"
@@ -167,11 +167,24 @@ function ServiceCard({
             className="object-cover"
             sizes="(max-width: 768px) 100vw, 33vw"
           />
-        ) : (
-          <span className="flex h-full w-full items-center justify-center text-6xl opacity-50">
-            {serviceType === "ambulatory" && "🚐"}
-            {serviceType === "stretcher" && "🛏️"}
-          </span>
+        )}
+        {serviceType === "ambulatory" && (
+          <Image
+            src="/images/ambulatory-van.png"
+            alt="Ambulatory medical transport van"
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, 33vw"
+          />
+        )}
+        {serviceType === "stretcher" && (
+          <Image
+            src="/images/stretcher-transport.png"
+            alt="Non-emergency stretcher transport"
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, 33vw"
+          />
         )}
       </div>
       <div className="flex flex-1 flex-col p-4 sm:p-6">
