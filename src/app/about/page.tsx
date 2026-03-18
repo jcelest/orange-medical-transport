@@ -47,7 +47,7 @@ export default function AboutPage() {
             </p>
             <div className="relative mt-4 aspect-video overflow-hidden rounded-xl sm:mt-6">
               <Image
-                src="/images/ford-transit-wheelchair.png"
+                src="/images/about-van.png"
                 alt="Orange Medical Transport wheelchair accessible van"
                 fill
                 className="object-cover"
